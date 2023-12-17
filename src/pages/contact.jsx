@@ -7,38 +7,7 @@ import contactGrid from "./contactGrid"
 import React, { useState, useEffect } from 'react';
 import ArrowIcon from "@layouts/svg-icons/Arrow";
 const Contact = () => {
- const [htmlContent, setHtmlContent] = useState('');
-
- useEffect(() => {
-  const fetchHtmlContent = async () => {
-     try {
-        const response = await fetch('/Prophecius/index.html'); // Adjust the path accordingly
-        const data = await response.text();
-        setHtmlContent(data);
-
-        // Dynamically load CSS content
-        const cssMatches = data.match(/<link\s.*?href=["'](.*?)\.css["']/g);
-        if (cssMatches) {
-           const styleElement = document.createElement('style');
-           document.head.appendChild(styleElement);
-
-           cssMatches.forEach(async (cssLink) => {
-              const hrefMatch = cssLink.match(/href=["'](.*?)["']/);
-              if (hrefMatch) {
-                 const cssUrl = hrefMatch[1];
-                 const cssResponse = await fetch(cssUrl);
-                 const cssContent = await cssResponse.text();
-                //  styleElement.sheet.insertRule(cssContent);
-              }
-           });
-        }
-     } catch (error) {
-        console.error('Error fetching HTML content:', error);
-     }
-  };
-
-  fetchHtmlContent();
-}, []);
+ 
 
   // Read the content of the HTML file
   return (
@@ -61,7 +30,6 @@ const Contact = () => {
         <contactGrid/>
         <div id="dynamicContent" />
    
-        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />        {/* contact form */}
         <section id="contact">
             <div className="container mil-p-120-90">
                 <h3 className="mil-center mil-up mil-mb-120">Let's <span className="mil-thin">Talk</span></h3>
